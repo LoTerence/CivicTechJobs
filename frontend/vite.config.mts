@@ -2,22 +2,26 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
-import { resolve, join } from "path";
+import {
+  resolve,
+  // join
+} from "path";
 
 export default defineConfig(() => {
-  const INPUT_DIR = "./src";
-  const OUTPUT_DIR = "./dist";
+  // const INPUT_DIR = "./src";
+  // const OUTPUT_DIR = "./dist";
 
   return {
     //to resolve relative file paths for sass (no plugin)
     resolve: {
       alias: {
-        "@": resolve(INPUT_DIR),
+        // "@": resolve(INPUT_DIR),
+        "@": resolve("./src"),
       },
     },
-    root: resolve(INPUT_DIR),
+    // root: resolve(INPUT_DIR),
     //keep static assets path consistent with django
-    base: "/static/",
+    // base: "/static/",
     plugins: [
       svgr(),
       react(),
@@ -32,7 +36,7 @@ export default defineConfig(() => {
         usePolling: true,
       },
     },
-    build: {
+    /* build: {
       manifest: true,
       emptyOutDir: true,
       outDir: resolve(OUTPUT_DIR),
@@ -41,6 +45,6 @@ export default defineConfig(() => {
           entry: join(INPUT_DIR, "/index.tsx"),
         },
       },
-    },
+    }, */
   };
 });

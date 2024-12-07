@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ctj_api.apps.CtjApiConfig",
     "rest_framework",
-    "django_vite",
+    # "django_vite",
 ]
 
 MIDDLEWARE = [
@@ -90,12 +90,12 @@ SECURE_HSTS_PRELOAD = config("HSTS_ENABLED", default=False, cast=bool)
 
 # Whitenoise settings
 # http://whitenoise.evans.io/en/stable/django.html#WHITENOISE_IMMUTABLE_FILE_TEST
-def immutable_file_test(path, url):
-    # Match vite (rollup)-generated hashes, à la, `some_file-CSliV9zW.js`
-    return re.match(r"^.+[.-][0-9a-zA-Z_-]{8,12}\..+$", url)
+# def immutable_file_test(path, url):
+#     # Match vite (rollup)-generated hashes, à la, `some_file-CSliV9zW.js`
+#     return re.match(r"^.+[.-][0-9a-zA-Z_-]{8,12}\..+$", url)
 
 
-WHITENOISE_IMMUTABLE_FILE_TEST = immutable_file_test
+# WHITENOISE_IMMUTABLE_FILE_TEST = immutable_file_test
 
 STORAGES = {
     "staticfiles": {
@@ -166,23 +166,25 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # django-vite settings
 # https://github.com/MrBin99/django-vite
-DJANGO_VITE = {
-    "default": {
-        # enable vite HMR in dev mode
-        "dev_mode": config("DEBUG", default=False, cast=bool),
-        "dev_server_port": 5175,
-        # resolve static asset paths in production
-        "manifest_path": Path(
-            BASE_DIR
-            / "frontend"
-            / "static"
-            / "vite_assets_dist"
-            / ".vite"
-            / "manifest.json"
-        ).resolve(),
-    }
-}
+# DJANGO_VITE = {
+#     "default": {
+#         # enable vite HMR in dev mode
+#         "dev_mode": config("DEBUG", default=False, cast=bool),
+#         "dev_server_port": 5175,
+#         # resolve static asset paths in production
+#         "manifest_path": Path(
+#             BASE_DIR
+#             / "frontend"
+#             / "static"
+#             / "vite_assets_dist"
+#             / ".vite"
+#             / "manifest.json"
+#         ).resolve(),
+#     }
+# }
 # Add the build.outDir from vite.config.js to STATICFILES_DIRS
 # so that collectstatic can collect your compiled vite assets.
-STATICFILES_DIRS = [BASE_DIR / "frontend/static/vite_assets_dist"]
+# STATICFILES_DIRS = [BASE_DIR / "frontend/static/vite_assets_dist"]
 # Note: When building, these files need to be copied over from /frontend/dist
+
+STATICFILES_DIRS = [BASE_DIR / "frontend/static/frontend"]

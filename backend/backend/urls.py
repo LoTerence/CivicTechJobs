@@ -20,6 +20,9 @@ from django.http import JsonResponse
 from django.urls import include, path, re_path
 from django.views.generic import TemplateView
 
+from django.conf import settings
+from django.views.static import serve
+
 
 # Custom handler for incorrect API routes
 def api_not_found(request, exception=None):
@@ -39,9 +42,17 @@ urlpatterns = [
     # Custom error handler for invalid API routes
     re_path(r"^api/.*$", api_not_found),  # Catch-all for incorrect API routes
     # Catch-all for frontend (React)
+    # re_path(
+    #     r"^.*$",
+    #     TemplateView.as_view(template_name="index.html"),
+    #     name="index",
+    # ),
     re_path(
         r"^.*$",
-        TemplateView.as_view(template_name="index.html"),
-        name="index",
+        serve,
+        {
+            "path": "index.html",
+            "document_root": settings.BASE_DIR / "frontend/static/frontend",
+        },
     ),
 ]
